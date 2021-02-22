@@ -20,6 +20,25 @@
 ********************************************************************************************/
 
 #include "raylib.h"
+#include <iostream>
+
+unsigned int ElfHash(unsigned char* data)
+{
+    unsigned int hash = 0;
+    unsigned int x = 0;
+
+    for (unsigned char* i = data; *i != '\0'; ++i)
+    {
+        hash = (hash << 4) + *i;
+        if ((x = hash & 0xF0000000L) != 0)
+        {
+            hash ^= (x >> 24);
+            hash &= ~x;
+        }
+    }
+
+    return (hash & 0x7FFFFFFF);
+}
 
 int main(int argc, char* argv[])
 {
@@ -31,6 +50,9 @@ int main(int argc, char* argv[])
     InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
 
     SetTargetFPS(60);
+
+
+
     //--------------------------------------------------------------------------------------
 
 
@@ -40,14 +62,20 @@ int main(int argc, char* argv[])
 
         // Update
         //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
+        int checkSum = 0;
+        unsigned char* input = char();
 
+        
+
+        std::cin >> input;
+
+         checkSum = ElfHash(input);
+        
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(GetColor(checkSum));
 
         EndDrawing();
         //----------------------------------------------------------------------------------
