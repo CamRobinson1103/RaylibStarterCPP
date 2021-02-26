@@ -22,17 +22,19 @@
 #include "raylib.h"
 #include <iostream>
 
+// A function that changes the color of the background using a string.
 unsigned int HashBrown(unsigned char* data)
 {
     unsigned int hash = 0;
 
+    //Checks if data is null
     for (unsigned char* i = data; *i != '\0'; i++)
     {
-        hash = *i * 2;
-        hash += pow(*i, sizeof(i));
+        //Multiplies a number to give it a specific id
+        hash = (hash * 8001) + data[1];
     }
 
-    return (hash << 10);
+    return (hash << 12);
 }
 
 unsigned int ElfHash(unsigned char* data)
@@ -50,6 +52,7 @@ unsigned int ElfHash(unsigned char* data)
         }
     }
 
+    //returns hash
     return (hash & 0x7FFFFFFF);
 }
 
@@ -82,7 +85,6 @@ int main(int argc, char* argv[])
         
 
         std::cin >> input;
-
          checkSum = HashBrown(input);
         
         // Draw
